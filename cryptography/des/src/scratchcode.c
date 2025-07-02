@@ -3,15 +3,16 @@
 #include <stdint.h>
 #include <bitop.h>
 #include <stdio.h>
+#include <string.h>
 
 void scratchcode() {
-  uint8_t num = 32;
+  uint8_t test = 0b100101;
+  int firstBit = getBit(&test, 2);
+  int secondBit = getBit(&test, 7);
 
-  for (int i = 0; i < 8; ++i) {
-    num = 32;
-    printf("%d:", i);
-    slowRotr(&num, 8, i, 2, 3);
+  uint8_t result = firstBit << 1 | secondBit;
 
-    printBits(&num, 8); 
-  }
+  printf("%d\n", firstBit);
+  printf("%d\n", secondBit);
+  printf("%d\n", result);
 }

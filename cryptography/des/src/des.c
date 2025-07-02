@@ -116,6 +116,10 @@ int pc2[48] = {
   34, 53, 46, 42, 50, 36, 29, 32
 };
 
+void sBoxes(uint8_t out[1], uint8_t in[1], int s[64]) {
+
+}
+
 void keyRound(uint8_t *in, int round) {
   if (
     round == 1 ||
