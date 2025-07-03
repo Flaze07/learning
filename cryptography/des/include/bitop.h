@@ -7,6 +7,7 @@ int getBit(uint8_t *bits, int idx);
 void setBit(uint8_t *bits, int idx);
 void clearBit(uint8_t *bits, int idx);
 
+// size is in bits
 void alterBits(uint8_t *outs, uint8_t *in, int *tables, int size);
 
 void rotl(uint8_t *bits, int size, int count);

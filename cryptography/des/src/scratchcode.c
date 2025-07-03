@@ -12,9 +12,9 @@ void scratchcode() {
 
   uint8_t result = firstBit << 1 | secondBit;
   uint8_t result2 = (test << 3) >> 4;
+  uint8_t result3 = test << 3;
+  result3 = result3 >> 4;
 
-  printf("%d\n", firstBit);
-  printf("%d\n", secondBit);
-  printf("%d\n", result);
-  printf("%d\n", result2);
+  printf("result2: %d\n", result2);
+  printf("result3: %d\n", result3);
 }

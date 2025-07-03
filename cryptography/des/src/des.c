@@ -1,5 +1,6 @@
 #include <bitop.h>
 #include <des.h>
+#include <string.h>
 
 int ip[64] = {
   58, 50, 42, 34, 26, 18, 10, 2,
@@ -117,10 +118,20 @@ int pc2[48] = {
 };
 
 void sBoxes(uint8_t out[1], uint8_t in[1], int s[64]) {
+  int firstBit = getBit(in, 2);
+  int secondBit = getBit(in, 7);
 
+  int rowBits = firstBit << 1 || secondBit;
+
+  int columnBits = in[0] << 3;
+  columnBits = in[0] >> 4;
+
+  int index = (rowBits * 16) + columnBits;
+
+  out[0] = index;
 }
 
-void keyRound(uint8_t *in, int round) {
+void keyRound(uint8_t in[7], int round) {
   if (
     round == 1 ||
     round == 2 ||
@@ -135,12 +146,28 @@ void keyRound(uint8_t *in, int round) {
   }
 }
 
+void fFunction(uint8_t out[4], uint8_t in[4], uint8_t key[6]) {
+  uint8_t expanded[6];
+
+  alterBits(expanded, in, e, 48);
+}
+
 // in: 64 bits, key: 64 bits
-void desEncrypt(uint8_t *out, uint8_t *in, uint8_t key[64]) {
-  uint8_t permutedPlaintext[64];
-  uint8_t alteredKey[56];
+void desEncrypt(uint8_t out[8], uint8_t in[8], uint8_t key[8]) {
+  uint8_t permutedPlaintext[8];
+  uint8_t alteredKey[7];
 
   alterBits(permutedPlaintext, in, ip, 64);
   alterBits(alteredKey, key, pc1, 56);
+
+  for (int i = 0; i < 16; ++i) {
+    int round = i + 1;
+
+    uint8_t left[4];
+    uint8_t right[4];
+
+    memcpy(left, permutedPlaintext, 4);
+    memcpy(right, permutedPlaintext + 4, 4);
+  }
 }
 
