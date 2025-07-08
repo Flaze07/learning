@@ -5,13 +5,14 @@
 
 void printBits(uint8_t *bits, int size) {
   for (int i = 0; i < size; ++i) {
+    if (i % 8 == 0 && i > 0) {
+      printf("\n");
+    }
+
     int bit = getBit(bits, i);
 
     printf("%d ", bit);
 
-    if (i % 8 == 0 && i > 0) {
-      printf("\n");
-    }
   }
 
   printf("\n");
