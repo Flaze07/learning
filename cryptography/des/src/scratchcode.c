@@ -1,5 +1,6 @@
 #include <scratchcode.h>
 #include <bitio.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <bitop.h>
 #include <stdio.h>
@@ -28,12 +29,18 @@ void tempS(uint8_t out[1], uint8_t *in, int begin, int sBox[64]) {
 }
 
 void scratchcode() {
-  char *c = "abcdefgh";
+  uint8_t temp[8] = "abcdefgh";
+  uint8_t key[8] = "12345678";
+  
+  uint8_t encrypted[8];
 
-  char d[8];
+  printf("encrypting...\n");
+  desEncrypt(encrypted, temp, key);
 
-  memcpy(d, c + 4, 4);
-  memcpy(d + 4, c, 4);
+  uint8_t decrypted[8];
+  
+  printf("decrypting...\n");
+  desDecrypt(decrypted, encrypted, key);
 
-  printf("%.8s\n", d);
+  printf("%.8s\n", decrypted);
 }

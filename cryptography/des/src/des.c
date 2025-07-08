@@ -23,7 +23,7 @@ void sBoxes(uint8_t out[1], uint8_t *in, int begin, int s[64]) {
   out[0] = s[index];
 }
 
-void keyRound(uint8_t in[7], int round) {
+void encryptKeyRound(uint8_t in[7], int round) {
   if (
     round == 1 ||
     round == 2 ||
@@ -35,6 +35,24 @@ void keyRound(uint8_t in[7], int round) {
   } else {
     slowRotl(in, 56, 2, 0, 28);
     slowRotl(in, 56, 2, 28, 0);
+  }
+}
+
+void decryptKeyRound(uint8_t *in, int round) {
+  if (round == 1) {
+    return;
+  }
+
+  if (
+    round == 2 ||
+    round == 9 ||
+    round == 16
+  ) {
+    slowRotr(in, 56, 1, 0, 28);
+    slowRotr(in, 56, 1, 28, 0);
+  } else {
+    slowRotr(in, 56, 2, 0, 28);
+    slowRotr(in, 56, 2, 0, 0);
   }
 }
 
@@ -84,7 +102,47 @@ void desEncrypt(uint8_t out[8], uint8_t in[8], uint8_t key[8]) {
     memcpy(left, permutedPlaintext, 4);
     memcpy(right, permutedPlaintext + 4, 4);
 
-    keyRound(alteredKey, round);
+    encryptKeyRound(alteredKey, round);
+
+    uint8_t roundKey[6];
+
+    alterBits(roundKey, alteredKey, pc2, 48);
+
+    uint8_t modifiedValue[4];
+    fFunction(modifiedValue, right, roundKey);
+
+    for (int i = 0; i < 4; ++i) {
+      modifiedValue[i] ^= left[i];
+    }
+
+    memcpy(permutedPlaintext, right, 4);
+    memcpy(permutedPlaintext + 4, modifiedValue, 4);
+  }
+
+  uint8_t reversed[8];
+  memcpy(reversed, permutedPlaintext + 4, 4);
+  memcpy(reversed + 4, permutedPlaintext, 4);
+
+  alterBits(out, reversed, fp, 64);
+}
+
+void desDecrypt(uint8_t out[8], uint8_t in[8], uint8_t key[8]) {
+  uint8_t permutedPlaintext[8];
+  uint8_t alteredKey[7];
+
+  alterBits(permutedPlaintext, in, ip, 64);
+  alterBits(alteredKey, key, pc1, 56);
+
+  for (int i = 15; i >= 0; i--) {
+    int round = i + 1;
+
+    uint8_t left[4];
+    uint8_t right[4];
+
+    memcpy(left, permutedPlaintext, 4);
+    memcpy(right, permutedPlaintext + 4, 4);
+
+    decryptKeyRound(alteredKey, round);
 
     uint8_t roundKey[6];
 
@@ -107,4 +165,3 @@ void desEncrypt(uint8_t out[8], uint8_t in[8], uint8_t key[8]) {
 
   alterBits(out, reversed, fp, 64);
 }
-
