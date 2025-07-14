@@ -154,7 +154,7 @@ void desDecrypt(uint8_t out[8], uint8_t in[8], uint8_t key[8]) {
     for (int i = 0; i < 4; ++i) {
       modifiedValue[i] ^= left[i];
     }
-    
+   
     memcpy(permutedPlaintext, right, 4);
     memcpy(permutedPlaintext + 4, modifiedValue, 4);
   }

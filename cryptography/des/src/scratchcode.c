@@ -29,18 +29,27 @@ void tempS(uint8_t out[1], uint8_t *in, int begin, int sBox[64]) {
 }
 
 void scratchcode() {
-  uint8_t temp[8] = "abcdefgh";
-  uint8_t key[8] = "12345678";
-  
-  uint8_t encrypted[8];
-
-  printf("encrypting...\n");
-  desEncrypt(encrypted, temp, key);
-
-  uint8_t decrypted[8];
-  
-  printf("decrypting...\n");
-  desDecrypt(decrypted, encrypted, key);
-
-  printf("%.8s\n", decrypted);
+  // uint8_t temp[8] = "abcdefgh";
+  // uint8_t key[8] = "12345678";
+  //
+  // printf("plaintext:\n");
+  // printBits(temp, 64);
+  // printf("key:\n");
+  // printBits(key, 64);
+  //
+  // printf("plaintext: %.8s\n", temp);
+  //
+  // uint8_t encrypted[8];
+  //
+  // printf("encrypting...\n");
+  // desEncrypt(encrypted, temp, key);
+  //
+  // printf("encrypted: %.8s\n", encrypted);
+  //
+  // uint8_t decrypted[8];
+  //
+  // printf("decrypting...\n");
+  // desDecrypt(decrypted, encrypted, key);
+  //
+  // printf("decrypted: %.8s\n", decrypted);
 }
