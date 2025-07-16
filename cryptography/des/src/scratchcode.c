@@ -29,9 +29,11 @@ void tempS(uint8_t out[1], uint8_t *in, int begin, int sBox[64]) {
 }
 
 void scratchcode() {
-  // uint8_t temp[8] = "abcdefgh";
+  uint8_t temp[8] = "abcdefgh";
+  uint8_t result[8];
+  alterBits(result, temp, ip, 64);
+  printBits(result, 64);
   // uint8_t key[8] = "12345678";
-  //
   // printf("plaintext:\n");
   // printBits(temp, 64);
   // printf("key:\n");
