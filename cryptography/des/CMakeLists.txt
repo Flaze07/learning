@@ -8,6 +8,7 @@ project(
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_REQUIRED_LIBRARIES m)
 
 add_executable(
   des
@@ -22,4 +23,5 @@ target_link_libraries(
   des
   PRIVATE
     project_lib
+    m
 )
