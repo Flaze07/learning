@@ -2,8 +2,10 @@
 #define BITOP_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 int getBit(uint8_t *bits, int idx);
+int reversedGetBit(uint8_t *bits, int idx);
 void setBit(uint8_t *bits, int idx);
 void clearBit(uint8_t *bits, int idx);
 

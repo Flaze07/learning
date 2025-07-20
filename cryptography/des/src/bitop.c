@@ -9,6 +9,16 @@ int getBit(uint8_t *bits, int idx) {
   return (bits[byteIdx] & mask) ? 1 : 0;
 }
 
+int reversedGetBit(uint8_t *bits, int idx) {
+  int byteIdx = idx / 8;
+  int bitIdx = idx % 8;
+
+  uint8_t mask = 0x1 << bitIdx;
+
+  return (bits[byteIdx] & mask) ? 1 : 0;
+}
+
+
 void setBit(uint8_t *bits, int idx) {
   int byteIdx = idx / 8;
   int bitIdx = idx % 8;

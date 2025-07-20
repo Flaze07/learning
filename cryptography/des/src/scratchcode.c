@@ -29,10 +29,26 @@ void tempS(uint8_t out[1], uint8_t *in, int begin, int sBox[64]) {
 }
 
 void scratchcode() {
-  uint8_t temp[8] = "abcdefgh";
-  uint8_t result[8];
-  alterBits(result, temp, ip, 64);
-  printBits(result, 64);
+  uint8_t currentKey[7];
+  currentKey[0] = 0x0;
+  currentKey[1] = 0x0;
+  currentKey[2] = 0xFF;
+  currentKey[3] = 0x6F;
+  currentKey[4] = 0xE6;
+  currentKey[5] = 0x11;
+  currentKey[6] = 0xF0;
+
+  printf("Before rotate left:\n");
+  printBits(currentKey, 56);
+
+  printf("after rotate left:\n");
+
+  slowRotl(currentKey, 56, 2, 0, 28);
+  slowRotl(currentKey, 56, 2, 28, 0);
+
+  printBits(currentKey, 56);
+  // indexedPrintBits(currentKey, 56);
+
   // uint8_t key[8] = "12345678";
   // printf("plaintext:\n");
   // printBits(temp, 64);
