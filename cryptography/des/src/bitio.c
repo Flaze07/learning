@@ -9,7 +9,7 @@ void printBits(uint8_t *bits, int size) {
       printf("\n");
     }
 
-    int bit = reversedGetBit(bits, i);
+    int bit = getBit(bits, i);
 
     printf("%d ", bit);
 
@@ -27,7 +27,7 @@ void indexedPrintBits(uint8_t *bits, int size) {
       printf("\n");
     }
 
-    int bit = reversedGetBit(bits, i);
+    int bit = getBit(bits, i);
 
     int currDigitCount = trunc(log10(i)) + 1;
 
