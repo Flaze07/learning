@@ -1,7 +1,7 @@
 add_library(
   project_lib
-  bit_array.c
-  scratchcode.c
+  bit_array.cpp
+  scratchcode.cpp
 )
 
 target_include_directories(
