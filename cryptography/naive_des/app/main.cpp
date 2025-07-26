@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <scratchcode.h>
+#include <scratchcode.hpp>
 
 int main() {
   scratchcode();
