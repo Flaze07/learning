@@ -12,6 +12,12 @@ void scratchcode() {
 
   string str = merged.toBinString();
 
-  printf("Origin: %d\n", (int)'a');
   printf("%*s\n", (int)str.size(), str.c_str());
+
+  BitArray result = merged.rotateLeft(2);
+
+  // string resultStr = result.toBinString();
+
+  // printf("after\n");
+  // printf("%*s\n", (int)resultStr.size(), resultStr.c_str());
 }

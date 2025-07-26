@@ -96,7 +96,8 @@ BitArray BitArray::rotateLeft(size_t amount) const {
 
   int inverse = ret.m_size - amount;
 
-  ret = (ret << amount) | (ret >> inverse);
+  // ret = (ret << amount) | (ret >> inverse);
+  ret = ret >> amount;
 
   return ret;
 }
