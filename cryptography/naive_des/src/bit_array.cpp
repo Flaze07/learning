@@ -168,7 +168,7 @@ string BitArray::toString() {
       char c = static_cast<char>(charHolder);
       ret += c;
 
-      count = 8;
+      count = 0;
       charHolder = 0;
     }
   }

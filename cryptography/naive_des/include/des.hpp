@@ -29,6 +29,17 @@ static array<size_t, 64> fp = {
   33, 1, 41, 9, 49, 17, 57, 25
 };
 
+static array<size_t, 48> e = {
+  32, 1, 2, 3, 4, 5,
+  4, 5, 6, 7, 8, 9,
+  8, 9, 10, 11, 12, 13,
+  12, 13, 14, 15, 16, 17,
+  16, 17, 18, 19, 20, 21,
+  20, 21, 22, 23, 24, 25, 
+  24, 25, 26, 27, 28, 29, 
+  28, 29, 30, 31, 32, 1,
+};
+
 static array<size_t, 64> s1 = {
   14, 4, 13, 1, 2, 15, 11, 8, 3, 10, 6, 12, 05, 9, 0, 7,
   0, 15, 7, 4, 14, 2, 13, 1, 10, 6, 12, 11, 9, 5, 3, 8,
@@ -116,6 +127,9 @@ string des(string input, string key);
 template<size_t n>
 BitArray permute(BitArray input, array<size_t, n > table);
 
+BitArray keyRound(BitArray input, int roundNumber);
+
+BitArray sBox(BitArray input, array<size_t, 64> s);
 
 template <size_t n>
 BitArray permute(BitArray input, array<size_t, n> table) {
