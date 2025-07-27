@@ -2,22 +2,23 @@
 #include <cstdio>
 #include <scratchcode.hpp>
 #include <string>
+#include <des.hpp>
 
 using namespace std;
 
 void scratchcode() {
-  BitArray temp = BitArray::fromString("a");
-  BitArray temp2 = BitArray::fromString("b");
-  BitArray merged = BitArray::mergeBitArray({ temp, temp2 });
+  array<size_t, 64> ip_inverse{};
+  for (size_t i = 0; i < 64; ++i) {
+      ip_inverse[ip[i] - 1] = i + 1;
+  }
 
-  string str = merged.toBinString();
+  BitArray arr = BitArray::fromString("abcdefgh");
 
-  printf("%*s\n", (int)str.size(), str.c_str());
+  BitArray permuted = permute(arr, ip);
 
-  BitArray result = merged.rotateLeft(2);
+  BitArray reverted = permute(permuted, ip_inverse);
 
-  // string resultStr = result.toBinString();
+  string s = reverted.toString();
 
-  // printf("after\n");
-  // printf("%*s\n", (int)resultStr.size(), resultStr.c_str());
+  printf("%s\n", s.c_str());
 }

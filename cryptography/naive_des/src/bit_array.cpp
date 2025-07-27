@@ -2,6 +2,7 @@
 #include <cmath>
 #include <string>
 #include <vector>
+#include <cstdio>
 
 using namespace std;
 
@@ -73,6 +74,10 @@ BitArray BitArray::operator<<(size_t amount) const {
     ret[i] = m_bits[i - amount];
   }
 
+  for (size_t i = 0; i < startIdx; ++i) {
+    ret[i] = 0;
+  }
+
   return ret;
 }
 
@@ -85,6 +90,14 @@ BitArray BitArray::operator>>(size_t amount) const {
 
   for (size_t i = startIdx; i >= 0; --i) {
     ret[i] = m_bits[i + amount];
+
+    if (i == 0) {
+      break;
+    }
+  }
+
+  for (size_t i = lastIdx; i > startIdx; --i) {
+    ret[i] = 0;
   }
 
   return ret;
@@ -96,8 +109,7 @@ BitArray BitArray::rotateLeft(size_t amount) const {
 
   int inverse = ret.m_size - amount;
 
-  // ret = (ret << amount) | (ret >> inverse);
-  ret = ret >> amount;
+  ret = (ret << amount) | (ret >> inverse);
 
   return ret;
 }
@@ -143,6 +155,27 @@ uint64_t BitArray::toUint64() {
   return ret;
 }
 
+string BitArray::toString() {
+  string ret = "";
+
+  int charHolder = 0;
+  int count = 0;
+  for (int i = 0; i < m_size; ++i) {
+    charHolder += pow(2, count) * m_bits[i];
+
+    count += 1;
+    if (count == 8) {
+      char c = static_cast<char>(charHolder);
+      ret += c;
+
+      count = 8;
+      charHolder = 0;
+    }
+  }
+
+  return ret;
+}
+
 BitArray BitArray::subArray(size_t startIdx, size_t length) {
   BitArray ret{length};
 
@@ -152,6 +185,10 @@ BitArray BitArray::subArray(size_t startIdx, size_t length) {
   }
 
   return ret;
+}
+
+const size_t& BitArray::size() {
+  return m_size;
 }
 
 BitArray BitArray::fromString(const string &input) {

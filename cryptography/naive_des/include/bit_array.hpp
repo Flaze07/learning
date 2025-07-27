@@ -29,7 +29,9 @@ public:
 
   string toBinString();
   uint64_t toUint64();
-
+  string toString();
+public:
+  const size_t& size();
 public:
   static BitArray fromString(const string &input);
   static BitArray fromUint64(const uint64_t &input);
