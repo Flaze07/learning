@@ -1,5 +1,6 @@
 #include <bit_array.hpp>
 #include <cmath>
+#include <cstdint>
 #include <string>
 #include <vector>
 #include <cstdio>
@@ -69,12 +70,12 @@ BitArray BitArray::operator<<(size_t amount) const {
   BitArray ret{m_size};
   ret = *this;
 
-  size_t startIdx = amount;
-  for (size_t i = startIdx; i < m_size; ++i) {
-    ret[i] = m_bits[i - amount];
+  size_t startIdx = 0;
+  for (size_t i = startIdx; i + amount < m_size; ++i) {
+    ret[i] = m_bits[i + amount];
   }
 
-  for (size_t i = 0; i < startIdx; ++i) {
+  for (size_t i = m_size - amount; i < m_size; ++i) {
     ret[i] = 0;
   }
 
@@ -85,19 +86,18 @@ BitArray BitArray::operator>>(size_t amount) const {
   BitArray ret{m_size};
   ret = *this;
 
-  size_t lastIdx = m_size - 1;
-  size_t startIdx = lastIdx - amount;
+  int stopIdx = amount;
 
-  for (size_t i = startIdx; i >= 0; --i) {
-    ret[i] = m_bits[i + amount];
+  for (int i = m_size - 1; i >= amount; --i) {
+    ret[i] = m_bits[i - amount];
+  }
+
+  for (int i = amount - 1; i >= 0; --i) {
+    ret[i] = 0;
 
     if (i == 0) {
       break;
     }
-  }
-
-  for (size_t i = lastIdx; i > startIdx; --i) {
-    ret[i] = 0;
   }
 
   return ret;
@@ -129,9 +129,8 @@ string BitArray::toBinString() {
   string ret = "";
   ret.reserve(m_size * 2);
 
-  int count = 0;
-  for (int i = m_size - 1; i >= 0; --i, ++count) {
-    if (count > 0 && count % 8 == 0) {
+  for (int i = 0; i < m_size; ++i) {
+    if (i > 0 && i % 8 == 0) {
       ret += "\n";
     }
 
@@ -149,7 +148,16 @@ uint64_t BitArray::toUint64() {
   uint32_t ret = 0;
 
   for (int i = 0; i < m_size; ++i) {
-    ret += m_bits[i] * pow(2, i);
+    ret += m_bits[i] * pow(2, 63 - i);
+  }
+
+  return ret;
+}
+
+size_t BitArray::toNumber() {
+  size_t ret = 0;
+  for (int i = 0; i < m_size; ++i) {
+    ret += m_bits[i] * pow(2, m_size - 1 - i);
   }
 
   return ret;
@@ -161,7 +169,7 @@ string BitArray::toString() {
   int charHolder = 0;
   int count = 0;
   for (int i = 0; i < m_size; ++i) {
-    charHolder += pow(2, count) * m_bits[i];
+    charHolder += pow(2, 7 - count) * m_bits[i];
 
     count += 1;
     if (count == 8) {
@@ -192,15 +200,13 @@ const size_t& BitArray::size() {
 }
 
 BitArray BitArray::fromString(const string &input) {
-  BitArray ret{input.size() * 8};
+  vector<BitArray> bits;
 
-  for (int i = 0; i < input.size(); ++i) {
-    char temp = input[i];
-    for (int j = 0; j < 8; ++j) {
-      ret[(i * 8) + j] = temp % 2;
-      temp = temp / 2;
-    }
+  for (size_t i = 0; i < input.size(); ++i) {
+    BitArray temp = BitArray::fromNumber((uint8_t) input[i], 8);
   }
+
+  BitArray ret = BitArray::mergeBitArray(bits);
 
   return ret;
 }
@@ -218,6 +224,28 @@ BitArray BitArray::mergeBitArray(vector<BitArray> bitArrays) {
     for (size_t j = 0; j < bitArrays[i].m_size; ++j) {
       ret[idx++] = bitArrays[i][j];
     }
+  }
+
+  return ret;
+}
+
+BitArray BitArray::fromNumber(size_t number, size_t bitCount) {
+  BitArray ret{bitCount};
+
+  vector<size_t>  bits;
+  bits.reserve(bitCount);
+
+  while(number > 0) {
+    size_t remainder = number % 2;
+    number = number / 2;
+
+    bits.push_back(remainder);
+  }
+
+  int count = 1;
+  for (size_t i = bitCount - bits.size(); i < ret.m_size; ++i) {
+    ret[i] = bits[bits.size() - count];
+    count += 1;
   }
 
   return ret;

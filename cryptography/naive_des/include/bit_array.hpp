@@ -29,6 +29,7 @@ public:
 
   string toBinString();
   uint64_t toUint64();
+  size_t toNumber();
   string toString();
 public:
   const size_t& size();
@@ -36,6 +37,7 @@ public:
   static BitArray fromString(const string &input);
   static BitArray fromUint64(const uint64_t &input);
   static BitArray mergeBitArray(vector<BitArray> bitArrays);
+  static BitArray fromNumber(size_t number, size_t bitCount);
 private:
   size_t m_size;
   std::vector<uint32_t> m_bits;
