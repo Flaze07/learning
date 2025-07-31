@@ -131,6 +131,8 @@ BitArray keyRound(BitArray input, int roundNumber);
 
 BitArray sBox(BitArray input, array<size_t, 64> s);
 
+BitArray f(BitArray input, BitArray key);
+
 template <size_t n>
 BitArray permute(BitArray input, array<size_t, n> table) {
   BitArray ret{table.size()};

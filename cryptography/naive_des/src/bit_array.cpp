@@ -204,6 +204,7 @@ BitArray BitArray::fromString(const string &input) {
 
   for (size_t i = 0; i < input.size(); ++i) {
     BitArray temp = BitArray::fromNumber((uint8_t) input[i], 8);
+    bits.push_back(temp);
   }
 
   BitArray ret = BitArray::mergeBitArray(bits);
