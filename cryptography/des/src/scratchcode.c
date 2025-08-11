@@ -29,12 +29,12 @@ void tempS(uint8_t out[1], uint8_t *in, int begin, int sBox[64]) {
 }
 
 void scratchcode() {
-  uint8_t temp[2] = "ab";
-  printBits(temp, 16);
-  uint16_t temp2;
-  temp2 = temp[0];
-  temp2 = ((uint8_t) temp2 << 8 | temp[1]);
-  printf("%x\n", temp2);
+  // uint8_t temp[2] = "ab";
+  // printBits(temp, 16);
+  // uint16_t temp2;
+  // temp2 = temp[0];
+  // temp2 = ((uint8_t) temp2 << 8 | temp[1]);
+  // printf("%x\n", temp2);
   // uint8_t currentKey[7];
   // currentKey[0] = 0x0;
   // currentKey[1] = 0x0;
@@ -55,25 +55,22 @@ void scratchcode() {
   // indexedPrintBits(currentKey, 56);
   // indexedPrintBits(currentKey, 56);
 
-  // uint8_t key[8] = "12345678";
-  // printf("plaintext:\n");
-  // printBits(temp, 64);
-  // printf("key:\n");
-  // printBits(key, 64);
-  //
-  // printf("plaintext: %.8s\n", temp);
-  //
-  // uint8_t encrypted[8];
-  //
-  // printf("encrypting...\n");
-  // desEncrypt(encrypted, temp, key);
-  //
-  // printf("encrypted: %.8s\n", encrypted);
-  //
-  // uint8_t decrypted[8];
-  //
-  // printf("decrypting...\n");
-  // desDecrypt(decrypted, encrypted, key);
-  //
-  // printf("decrypted: %.8s\n", decrypted);
+  uint8_t temp[8] = "abcdefgh";
+  uint8_t key[8] = "abcdefgh";
+
+  printf("plaintext: %.8s\n", temp);
+
+  uint8_t encrypted[8];
+
+  printf("encrypting...\n");
+  desEncrypt(encrypted, temp, key);
+
+  printf("encrypted: %.8s\n", encrypted);
+
+  uint8_t decrypted[8];
+
+  printf("decrypting...\n");
+  desDecrypt(decrypted, encrypted, key);
+
+  printf("decrypted: %.8s\n", decrypted);
 }

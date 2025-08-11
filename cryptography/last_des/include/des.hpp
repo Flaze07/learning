@@ -1,9 +1,7 @@
 #ifndef DES_HPP
 #define DES_HPP
 
-#include "bit_array.hpp"
-#include <sstream>
-#include <string>
+#include <bitset>
 #include <array>
 
 using namespace std;
@@ -123,26 +121,25 @@ static array<size_t, 48> pc2 = {
   34, 53, 46, 42, 50, 36, 29, 32,
 };
 
-string des(string input, string key);
+template <size_t N>
+bitset<N> permute(bitset<N> bits, array<size_t, N> tables);
 
-template<size_t n>
-BitArray permute(BitArray input, array<size_t, n > table);
+array<bitset<48>, 16> generateSubKeys(bitset<64> keys);
 
-BitArray keyRound(BitArray input, int roundNumber);
-BitArray sBox(BitArray input, array<size_t, 64> s);
-BitArray f(BitArray input, BitArray key);
+/**
+  * template implementations
+  */
 
-string desDecrypt(string input, string key);
+template <size_t N, size_t M>
+bitset<N> permute(bitset<M> bits, array<size_t, N> tables) {
+  bitset<N> result;
 
-template <size_t n>
-BitArray permute(BitArray input, array<size_t, n> table) {
-  BitArray ret{table.size()};
-
-  for (size_t i = 0; i < ret.size(); ++i) {
-    size_t targetIdx = table[i];
-    ret[i] = input[targetIdx];
+  for (int i = 0; i < N; ++i) {
+    int index = tables[i] - 1;
+    result[N - 1 - i] = bits[M - index];
   }
 
-  return ret;
+  return result;
 }
+
 #endif

@@ -8,15 +8,15 @@
 using namespace std;
 
 void scratchcode() {
-  BitArray temp = BitArray::mergeBitArray({
-    BitArray::fromNumber(255, 8),
-    BitArray::fromNumber(255, 8),
-    BitArray::fromNumber(255, 8),
-    BitArray::fromNumber(255, 8),
-    BitArray::fromNumber(255, 8),
-    BitArray::fromNumber(255, 8),
-  });
+  string temp1 = "abcdefgh";
 
-  BitArray result = f(temp, temp);
-  printf("%s\n", result.toBinString().c_str());
+  string encrypted = des(temp1, temp1);
+
+  printf("%s\n", encrypted.c_str());
+
+  string decrypted = desDecrypt(encrypted, temp1);
+
+  printf("%s\n", decrypted.c_str());
+
+  printf("\n");
 }
