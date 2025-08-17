@@ -4,11 +4,8 @@
 using namespace std;
 
 int main() {
-  string result = charToBinary('A');
+  string key = "abcdefgh";
+  bitset<64> keyBits{stringToBitset<64>(key)};
 
-  bitset<8> temp{result};
-
-  for (int i = 0; i < 8; ++i) {
-    printf("%d\n", temp.test(i));
-  }
+  printf("%s\n", keyBits.to_string().c_str());
 }

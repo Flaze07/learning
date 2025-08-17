@@ -58,4 +58,22 @@ bitset<N> subBits(bitset<M> source, int start, int length) {
   return result;
 }
 
+template <size_t N>
+bitset<N * 2> merge(const bitset<N>& left, const bitset<N>& right) {
+    bitset<N * 2> result;
+
+    // Place left half in upper N bits
+    for (size_t i = 0; i < N; i++) {
+        result[i + N] = left[i];
+    }
+
+    // Place right half in lower N bits
+    for (size_t i = 0; i < N; i++) {
+        result[i] = right[i];
+    }
+
+    return result;
+}
+
+
 #endif
